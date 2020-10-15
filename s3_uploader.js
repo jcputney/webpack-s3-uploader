@@ -28,6 +28,7 @@ const testRule = (rule, subject) => {
 };
 
 const handleErrors = (error, compilation, cb) => {
+  console.log(compilation);
   compilation.errors.push(new Error(error));
   cb(new Error(error));
 };
