@@ -28,8 +28,7 @@ const testRule = (rule, subject) => {
 };
 
 const handleErrors = (error, compilation, cb) => {
-  console.log(compilation);
-  compilation.getErrors().push(new Error(error));
+  compilation.errors.push(new Error(error));
   cb(new Error(error));
 };
 
@@ -84,7 +83,7 @@ module.exports = class S3Plugin {
     this.options.directory =
       compiler.options.output.path || compiler.options.output.context || '.';
 
-    compiler.hooks.done.tap('after-emit', (compilation, cb) => {
+    compiler.hooks.afterEmit.tap('after-emit', (compilation, cb) => {
       if (!hasRequiredUploadOpts) {
         const error = `S3Plugin-RequiredS3UploadOpts: ${REQUIRED_S3_UP_OPTS.join(', ')}`;
         handleErrors(error, compilation, cb);
